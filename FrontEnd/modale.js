@@ -104,6 +104,15 @@ function displayModalPhotos(works) {
                     if (response.ok) {
                         container.remove();
 
+
+                        const figureToRemove = document.querySelector(`.gallery figure[data-id="${work.id}"]`);
+
+                        if (figureToRemove) {
+
+                            figureToRemove.remove();
+                        }
+
+
                     } else {
                         alert("Erreur suppression");
                     }

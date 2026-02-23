@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let allWorks = [];
 
+
     fetch("http://localhost:5678/api/works")
         .then(response => response.json())
         .then(works => {
@@ -19,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 hideFiltersIfToken();
             });
         });
+
+
+
 
     function getCategories() {
         return fetch("http://localhost:5678/api/categories")
@@ -63,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         WorksToShow.forEach(work => {
             const figure = document.createElement("figure");
+            figure.dataset.id = work.id;
 
             const img = document.createElement("img");
             img.src = work.imageUrl;
