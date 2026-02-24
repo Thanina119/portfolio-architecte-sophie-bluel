@@ -106,9 +106,7 @@ function displayModalPhotos(works) {
 
 
                         const figureToRemove = document.querySelector(`.gallery figure[data-id="${work.id}"]`);
-
                         if (figureToRemove) {
-
                             figureToRemove.remove();
                         }
 
@@ -306,12 +304,14 @@ function setupAddPhotoForm() {
     const messageErreur = document.querySelector(".message-erreur");
     const titreInput = document.querySelector(".input-form");
     const messageSucces = document.querySelector(".message-succes");
+    const selectCategorie = document.querySelector(".select-form");
 
     boutonValider.addEventListener("click", function (e) {
 
         e.preventDefault();
+        console.log("CLICK VALIDER");
 
-        if (titreInput.value === "" || imageInput.files.length === 0) {
+        if (titreInput.value === "" || inputImage.files.length === 0) {
             messageErreur.textContent = "Veuillez remplir tous les champs";
             messageErreur.style.display = "block";
 
@@ -336,31 +336,40 @@ function setupAddPhotoForm() {
                 body: formData
             })
                 .then(response => {
+                    console.log("STATUS", response.status);
                     if (response.ok) {
                         messageSucces.textContent = "Projet ajouté avec succès";
                         messageSucces.style.display = "block";
+
+                        titreInput.value = "";
+                        selectCategorie.value = "";
+                        inputImage.value = "";
+                        document.querySelector(".bloc-gris-img").src = "";
+
+
                     }
 
 
                     return response.json();
                 })
-                .then(newProjet => {
+                .then(nouveauProjet => {
 
                     const galerie = document.querySelector(".gallery");
                     const figure = document.createElement("figure");
+                    figure.dataset.id = nouveauProjet.id;
                     const image = document.createElement("img");
-                    image.src = newProjet.imageUrl;
-                    image.alt = newProjet.title;
+                    image.src = nouveauProjet.imageUrl;
+                    image.alt = nouveauProjet.title;
 
                     const figcaption = document.createElement("figcaption");
-                    figcaption.textContent = newProjet.title;
+                    figcaption.textContent = nouveauProjet.title;
 
 
                     const galerieModale = document.querySelector(".galerie-modale");
                     const figureModale = document.createElement("figure");
                     const imageModale = document.createElement("img");
-                    imageModale.src = newProjet.imageUrl;
-                    image.alt = newProjet.title;
+                    imageModale.src = nouveauProjet.imageUrl;
+                    image.alt = nouveauProjet.title;
 
 
                     figure.appendChild(image);
