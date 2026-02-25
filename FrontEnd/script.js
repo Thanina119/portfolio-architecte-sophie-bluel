@@ -12,23 +12,25 @@ document.addEventListener("DOMContentLoaded", function () {
             allWorks = works;
 
 
-            showWorks(allWorks);
+            afficherTravaux(allWorks);
 
 
-            getCategories().then(categories => {
-                displayFilters(categories);
-                hideFiltersIfToken();
+            recupererCategories().then(categories => {
+                afficherFiltres(categories);
+                masquerFiltresSiToken();
             });
         });
 
 
 
 
-    function getCategories() {
+    function recupererCategories() {
+
         return fetch("http://localhost:5678/api/categories")
             .then(response => response.json());
     }
-    function displayFilters(categories) {
+
+    function afficherFiltres(categories) {
         const portfolio = document.querySelector("#portfolio");
         const gallery = document.querySelector(".gallery");
 
@@ -44,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         btnAll.addEventListener("click", () => {
 
-            showWorks(allWorks);
+            afficherTravaux(allWorks);
         });
 
         categories.forEach(category => {
@@ -55,23 +57,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
             btn.addEventListener("click", () => {
                 console.log("click", category.name, category.id);
-                const filteredWorks = allWorks.filter(work => work.categoryId === category.id);
-                showWorks(filteredWorks);
+                const travauxFiltres = allWorks.filter(work => work.categoryId === category.id);
+                afficherTravaux(travauxFiltres);
             });
         });
     }
 
-    function showWorks(WorksToShow) {
+    function afficherTravaux(travauxAAfficher) {
         const gallery = document.querySelector(".gallery");
         gallery.innerHTML = "";
 
-        WorksToShow.forEach(work => {
+        travauxAAfficher.forEach(work => {
             const figure = document.createElement("figure");
             figure.dataset.id = work.id;
 
             const img = document.createElement("img");
             img.src = work.imageUrl;
             img.alt = work.title;
+
 
             const figcaption = document.createElement("figcaption");
             figcaption.textContent = work.title;
@@ -87,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    function createEditBanner() {
+    function creerBandeauEdition() {
 
         const token = localStorage.getItem("token");
         if (!token) {
@@ -107,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.prepend(banner);
     }
 
-    function switchToLogout() {
+    function basculerVersDeconnexion() {
 
         const token = localStorage.getItem("token");
         if (!token) {
@@ -122,11 +125,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    createEditBanner();
-    switchToLogout();
+    creerBandeauEdition();
+    basculerVersDeconnexion();
 
 
-    function hideFiltersIfToken() {
+    function masquerFiltresSiToken() {
         const token = localStorage.getItem("token");
         if (!token) {
             return;
@@ -141,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    function showEditButton() {
+    function afficherBoutonEdition() {
         const token = localStorage.getItem("token");
         if (!token) {
             return;
@@ -152,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
         bouton.classList.add("edit-button");
         bouton.addEventListener("click", function () {
             console.log("clic sur modifier");
-            openModale();
+            ouvrirModale();
 
         });
 
@@ -171,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    showEditButton();
+    afficherBoutonEdition();
 
 
 

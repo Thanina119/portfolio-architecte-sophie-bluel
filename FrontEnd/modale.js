@@ -1,6 +1,6 @@
 
 console.log("modale.js chargé");
-function openModale() {
+function ouvrirModale() {
     if (document.querySelector(".modale")) return;
     const modale = document.createElement("div");
     modale.classList.add("modale");
@@ -29,11 +29,11 @@ function openModale() {
     });
 
 
-    createGalleryContent(contenu);
+    creerGalleryContenu(contenu);
     fetchWorksModal();
 }
 
-function createGalleryContent(contenu) {
+function creerGalleryContenu(contenu) {
 
     const titre = document.createElement("h2");
     titre.textContent = "Galerie photo";
@@ -48,7 +48,7 @@ function createGalleryContent(contenu) {
     const boutonAjouter = document.createElement("button");
     boutonAjouter.textContent = "Ajouter une photo";
     boutonAjouter.classList.add("bouton-ajouter-photo");
-    boutonAjouter.addEventListener("click", showAddPhotoModale);
+    boutonAjouter.addEventListener("click", afficherModaleAjoutPhoto);
 
     contenu.appendChild(titre);
     contenu.appendChild(galerie);
@@ -58,8 +58,8 @@ function createGalleryContent(contenu) {
 
     boutonAjouter.addEventListener("click", () => {
         contenu.innerHTML = "";
-        createAddPhotoHeader(contenu);
-        createAddPhotoForm(contenu);
+        creerHeaderAjoutPhoto(contenu);
+        creerFormulaireAjoutPhoto(contenu);
     });
 
 
@@ -71,12 +71,12 @@ function fetchWorksModal() {
     fetch("http://localhost:5678/api/works")
         .then(response => response.json())
         .then(works => {
-            displayModalPhotos(works);
+            afficherPhotosModale(works);
         });
 
 }
 
-function displayModalPhotos(works) {
+function afficherPhotosModale(works) {
     const galerie = document.querySelector(".galerie-modale");
     galerie.innerHTML = "";
 
@@ -129,19 +129,19 @@ function displayModalPhotos(works) {
 
 
 
-function showAddPhotoModale() {
+function afficherModaleAjoutPhoto() {
     const contenu = document.querySelector(".modale .contenu-modale");
     if (!contenu) return;
 
     contenu.innerHtTML = "";
 
-    createAddPhotoHeader(contenu);
-    createAddPhotoForm(contenu);
+    creerHeaderAjoutPhoto(contenu);
+    creerFormulaireAjoutPhoto(contenu);
 }
 
 
 
-function createAddPhotoHeader(contenu) {
+function creerHeaderAjoutPhoto(contenu) {
     const header = document.createElement("div");
     header.classList.add("header-ajout-photo");
 
@@ -151,7 +151,7 @@ function createAddPhotoHeader(contenu) {
 
     btnRetour.addEventListener("click", () => {
         contenu.innerHTML = "";
-        createGalleryContent(contenu);
+        creerGalleryContenu(contenu);
         fetchWorksModal();
     });
 
@@ -181,7 +181,7 @@ function createAddPhotoHeader(contenu) {
 
 }
 
-function createAddPhotoForm(contenu) {
+function creerFormulaireAjoutPhoto(contenu) {
 
 
     const form = document.createElement("form");
@@ -260,8 +260,8 @@ function createAddPhotoForm(contenu) {
 
     contenu.appendChild(form);
 
-    loadCategories();
-    setupAddPhotoForm();
+    chargerCategories();
+    configurerFormulaireAjoutPhoto();
 
 }
 
@@ -269,7 +269,7 @@ function createAddPhotoForm(contenu) {
 
 
 
-function setupAddPhotoForm() {
+function configurerFormulaireAjoutPhoto() {
 
 
     const inputImage = document.querySelector(".input-file");
@@ -309,7 +309,7 @@ function setupAddPhotoForm() {
     boutonValider.addEventListener("click", function (e) {
 
         e.preventDefault();
-        console.log("CLICK VALIDER");
+
 
         if (titreInput.value === "" || inputImage.files.length === 0) {
             messageErreur.textContent = "Veuillez remplir tous les champs";
@@ -361,6 +361,8 @@ function setupAddPhotoForm() {
                     image.src = nouveauProjet.imageUrl;
                     image.alt = nouveauProjet.title;
 
+
+
                     const figcaption = document.createElement("figcaption");
                     figcaption.textContent = nouveauProjet.title;
 
@@ -370,6 +372,7 @@ function setupAddPhotoForm() {
                     const imageModale = document.createElement("img");
                     imageModale.src = nouveauProjet.imageUrl;
                     image.alt = nouveauProjet.title;
+
 
 
                     figure.appendChild(image);
@@ -394,7 +397,7 @@ function setupAddPhotoForm() {
 
 
 
-function loadCategories() {
+function chargerCategories() {
     const select = document.querySelector(".select-form");
 
     fetch("http://localhost:5678/api/categories")
