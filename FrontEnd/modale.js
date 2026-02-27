@@ -289,11 +289,12 @@ function configurerFormulaireAjoutPhoto() {
 
         if (!fichier) return;
 
+
         const image = document.createElement("img");
         image.src = URL.createObjectURL(fichier);
         image.classList.add("bloc-gris-img");
 
-        blocGris.innerHTML = "";
+
         blocGris.appendChild(image);
 
 
@@ -336,7 +337,7 @@ function configurerFormulaireAjoutPhoto() {
                 body: formData
             })
                 .then(response => {
-                    console.log("STATUS", response.status);
+
                     if (response.ok) {
                         messageSucces.textContent = "Projet ajouté avec succès";
                         messageSucces.style.display = "block";
@@ -344,7 +345,9 @@ function configurerFormulaireAjoutPhoto() {
                         titreInput.value = "";
                         selectCategorie.value = "";
                         inputImage.value = "";
+
                         document.querySelector(".bloc-gris-img").src = "";
+
 
 
                     }

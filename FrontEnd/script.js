@@ -39,12 +39,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
         portfolio.insertBefore(filtersDiv, gallery);
 
-        const btnAll = document.createElement("button");
-        btnAll.textContent = "Tous";
-        btnAll.classList.add("filter-btn", "active");
-        filtersDiv.appendChild(btnAll);
+        const btnTous = document.createElement("button");
+        btnTous.textContent = "Tous";
+        btnTous.classList.add("filter-btn", "active");
+        filtersDiv.appendChild(btnTous);
 
-        btnAll.addEventListener("click", () => {
+        btnTous.addEventListener("click", () => {
+            document.querySelectorAll(".filter-btn")
+                .forEach(b => b.classList.remove("active"));
+
+
+            btnTous.classList.add("active");
 
             afficherTravaux(allWorks);
         });
@@ -56,7 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
             filtersDiv.appendChild(btn);
 
             btn.addEventListener("click", () => {
-                console.log("click", category.name, category.id);
+                document.querySelectorAll(".filter-btn")
+                    .forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+
                 const travauxFiltres = allWorks.filter(work => work.categoryId === category.id);
                 afficherTravaux(travauxFiltres);
             });
@@ -113,16 +121,27 @@ document.addEventListener("DOMContentLoaded", function () {
     function basculerVersDeconnexion() {
 
         const token = localStorage.getItem("token");
-        if (!token) {
-            return;
-        }
-        const menuItem = document.getElementById("logout-link");
-        menuItem.textContent = "logout";
+        const boutonLogin = document.getElementById("logout-link");
 
-        menuItem.addEventListener("click", function () {
-            localStorage.removeItem("token");
-            window.location.href = "index.html";
-        });
+        if (!boutonLogin) return;
+
+        if (!token) {
+            boutonLogin.textContent = "login";
+            boutonLogin.addEventListener("click", function () {
+                window.location.href = "login.html";
+            });
+
+
+
+        } else {
+
+            boutonLogin.textContent = "logout";
+
+            boutonLogin.addEventListener("click", function () {
+                localStorage.removeItem("token");
+                window.location.href = "index.html";
+            });
+        }
     }
 
     creerBandeauEdition();
@@ -140,6 +159,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (filters) {
             filters.remove();
         }
+
+
 
 
     }
