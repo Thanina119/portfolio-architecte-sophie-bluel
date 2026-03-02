@@ -57,7 +57,9 @@ function creerGalleryContenu(contenu) {
 
 
     boutonAjouter.addEventListener("click", () => {
+
         contenu.innerHTML = "";
+
         creerHeaderAjoutPhoto(contenu);
         creerFormulaireAjoutPhoto(contenu);
     });
@@ -150,7 +152,20 @@ function creerHeaderAjoutPhoto(contenu) {
     btnRetour.innerHTML = '<i class= "fa-solid fa-arrow-left"></i>';
 
     btnRetour.addEventListener("click", () => {
+
         contenu.innerHTML = "";
+
+        const boutonFermerGalerie = document.createElement("button");
+        boutonFermerGalerie.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        boutonFermerGalerie.classList.add("btn-fermer");
+
+        boutonFermerGalerie.addEventListener("click", function () {
+            modale.remove();
+        });
+
+        contenu.appendChild(boutonFermerGalerie);
+
+
         creerGalleryContenu(contenu);
         fetchWorksModal();
     });
@@ -294,7 +309,7 @@ function configurerFormulaireAjoutPhoto() {
         image.src = URL.createObjectURL(fichier);
         image.classList.add("bloc-gris-img");
 
-
+        blocGris.innerHTML = "";
         blocGris.appendChild(image);
 
 
@@ -348,6 +363,23 @@ function configurerFormulaireAjoutPhoto() {
 
                         document.querySelector(".bloc-gris-img").src = "";
 
+
+                        const iconeImage = document.createElement("span");
+                        iconeImage.innerHTML = '<i class="fa-regular  fa-image"></i>';
+                        iconeImage.classList.add("icone-img");
+
+                        const boutonAjoutBloc = document.createElement("button");
+                        boutonAjoutBloc.type = "button";
+                        boutonAjoutBloc.textContent = "+ Ajouter photo";
+                        boutonAjoutBloc.classList.add("btn-ajout-plus");
+
+                        const texteInfo = document.createElement('p');
+                        texteInfo.textContent = "jpg, png : 4mo max";
+                        texteInfo.classList.add("texte-info");
+
+                        blocGris.appendChild(iconeImage);
+                        blocGris.appendChild(boutonAjoutBloc);
+                        blocGris.appendChild(texteInfo);
 
 
                     }
