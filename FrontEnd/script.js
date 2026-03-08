@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("JS bien chargé")
+
 
     let allWorks = [];
 

@@ -1,9 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", initialiserConnexion);
+
+function initialiserConnexion() {
     const form = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
     const passWordInput = document.getElementById("password");
 
-    form.addEventListener("submit", function (event) {
+    if (!form) return;
+
+    form.addEventListener("submit", gererConnexion);
+
+    function gererConnexion(event) {
         event.preventDefault();
 
         const email = emailInput.value;
@@ -39,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
 
-    });
+    }
 
 
-});
+}

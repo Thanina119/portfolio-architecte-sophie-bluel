@@ -1,5 +1,5 @@
 
-console.log("modale.js chargé");
+
 function ouvrirModale() {
     if (document.querySelector(".modale")) return;
     const modale = document.createElement("div");
@@ -413,8 +413,8 @@ function configurerFormulaireAjoutPhoto() {
                     figure.appendChild(image);
                     figure.appendChild(figcaption);
                     galerie.appendChild(figure);
-                    figureModale.appendChild(imageModale);
-                    galerieModale.appendChild(figureModale);
+
+
                 })
 
 
